@@ -58,7 +58,7 @@ header {
 #logo {
   grid-column: 1;
   grid-row: 1;
-  max-height: 6rem;
+  max-height: 12rem;
   align-self: center;
   justify-self: center;
   pointer-events: none;
