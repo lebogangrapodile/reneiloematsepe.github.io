@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reneiloe Matsepe – Consulting By Bongi</title>
+
+  <!-- Google Fonts: Playfair Display (display) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    /* =====================================================
+       CSS CUSTOM PROPERTIES
+       To retheme: edit values in :root only.
+    ===================================================== */
+    :root {
+      --brand-blue:   #1aade4;
+      --brand-green:  #3cb043;
+      --brand-orange: #f37021;
+      --brand-yellow: #f7c200;
+      --accent:       #1aade4;
+      --text-dark:    #111827;
+      --text-mid:     #4b5563;
+      --text-light:   #9ca3af;
+      --bg:           #f5f7fa;
+      --card-bg:      #ffffff;
+      --shadow-sm:    0 2px 8px rgba(0,0,0,.06);
+      --shadow-lg:    0 20px 60px rgba(0,0,0,.12);
+      --radius-card:  24px;
+      --radius-btn:   50px;
+      --transition:   .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* =====================================================
+       RESET & BASE
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+
+      /* Subtle mesh background */
+      background-image:
+        radial-gradient(ellipse 80% 60% at 10% 10%, rgba(26,173,228,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 90%, rgba(60,176,67,.07) 0%, transparent 60%);
+    }
+
+    /* =====================================================
+       CARD CONTAINER
+    ===================================================== */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 420px;
+      overflow: hidden;
+      position: relative;
+      animation: cardReveal .6s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =====================================================
+       HEADER / HERO SECTION
+       Contains brand logo + decorative swoosh + avatar
+    ===================================================== */
+    .card__header {
+      position: relative;
+      background: linear-gradient(135deg, #f0fafe 0%, #eaf9ea 100%);
+      padding: 2.5rem 2rem 5rem;
+      min-height: 180px;
+      overflow: visible;
+    }
+    /* Decorative colour accent bar at very top */
+    .card__header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--brand-blue), var(--brand-green), var(--brand-orange), var(--brand-yellow));
+    }
+
+    /* ---- LOGO AREA ---- */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    /* SVG swoosh icon recreated in CSS/SVG inline */
+    .brand__icon {
+      width: 125px;
+      height: 125px;
+      flex-shrink: 0;
+      object-fit: contain;
+      transform: scale(1.3);
+      transform-origin: left center;
+    }
+
+    .brand__text {
+      line-height: 1.1;
+    }
+
+    .brand__text h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: .04em;
+      color: var(--text-dark);
+    }
+
+    .brand__text p {
+      font-size: .75rem;
+      color: var(--text-mid);
+      font-weight: 500;
+      letter-spacing: .02em;
+    }
+
+    /* ---- AVATAR ---- */
+    .avatar-wrap {
+      position: absolute;
+      bottom: -60px;
+      left: 2rem;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: conic-gradient(var(--brand-blue) 0deg, var(--brand-green) 90deg, var(--brand-orange) 180deg, var(--brand-yellow) 270deg, var(--brand-blue) 360deg);
+      padding: 3px;
+      box-shadow: 0 4px 20px rgba(26,173,228,.3);
+      z-index: 10;
+    }
+
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      display: block;
+    }
+
+    /* Fallback initials avatar (shown if image fails) */
+    .avatar-wrap .avatar-fallback {
+      display: none; /* shown via JS if image errors */
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-blue), var(--brand-green));
+      border: 3px solid #fff;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .05em;
+    }
+
+    /* =====================================================
+       BODY / INFO SECTION
+    ===================================================== */
+  .card__body {
+      padding: 4.5rem 2rem 2rem;
+    }
+
+    /* ---- NAME & TITLE ---- */
+    .person__name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: .25rem;
+    }
+
+    .person__role {
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--brand-blue);
+      letter-spacing: .03em;
+      margin-bottom: .1rem;
+    }
+
+    .person__company {
+      font-size: .8rem;
+      color: var(--text-mid);
+      font-weight: 700;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ---- DIVIDER ---- */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--brand-blue) 0%, transparent 100%);
+      opacity: .2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ---- CONTACT LIST ---- */
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-list li {
+      animation: itemReveal .5s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* Staggered animation for each row */
+    .contact-list li:nth-child(1) { animation-delay: .1s; }
+    .contact-list li:nth-child(2) { animation-delay: .18s; }
+    .contact-list li:nth-child(3) { animation-delay: .26s; }
+    .contact-list li:nth-child(4) { animation-delay: .34s; }
+    .contact-list li:nth-child(5) { animation-delay: .42s; }
+
+    @keyframes itemReveal {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Each row is a link */
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      padding: .6rem .75rem;
+      border-radius: 12px;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+
+    .contact-item:hover {
+      background: rgba(26,173,228,.07);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contact-item:active {
+      transform: translateX(2px) scale(.98);
+    }
+
+    /* Icon circle */
+    .contact-item__icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--brand-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .contact-item:hover .contact-item__icon {
+      transform: scale(1.1);
+      box-shadow: 0 4px 14px rgba(26,173,228,.35);
+    }
+
+    .contact-item__icon svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+
+    /* Text inside each row */
+    .contact-item__info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-item__value {
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .contact-item__label {
+      font-size: .72rem;
+      color: var(--text-light);
+      font-weight: 500;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    /* ---- SAVE CONTACT BUTTON ---- */
+    .btn-save {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: var(--radius-btn);
+      background: linear-gradient(135deg, var(--brand-blue) 0%, #0f8ec0 100%);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
+      box-shadow: 0 8px 24px rgba(26,173,228,.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Shine effect on hover */
+    .btn-save::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.25), transparent);
+      transition: left .45s ease;
+    }
+
+    .btn-save:hover::after { left: 150%; }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(26,173,228,.5);
+      filter: brightness(1.05);
+    }
+
+    .btn-save:active {
+      transform: translateY(0) scale(.97);
+      box-shadow: 0 4px 12px rgba(26,173,228,.3);
+    }
+
+    /* ---- SUCCESS TOAST ---- */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #111;
+      color: #fff;
+      padding: .75rem 1.5rem;
+      border-radius: 50px;
+      font-size: .85rem;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+      pointer-events: none;
+      z-index: 9999;
+      white-space: nowrap;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    .card__footer {
+      text-align: center;
+      padding: 1rem 2rem 1.5rem;
+      border-top: 1px solid rgba(0,0,0,.05);
+    }
+
+    .card__footer p {
+      font-size: .7rem;
+      color: var(--text-light);
+    }
+
+    /* =====================================================
+       RESPONSIVE — Tablet & Desktop
+    ===================================================== */
+    @media (min-width: 480px) {
+      .card { max-width: 440px; }
+      .person__name { font-size: 1.9rem; }
+    }
+
+    @media (min-width: 768px) {
+      .card {
+        max-width: 460px;
+        box-shadow: 0 32px 80px rgba(0,0,0,.14);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =====================================================
+       CARD ROOT
+  ====================================================== -->
+  <article class="card" role="main" aria-label="Reneiloe Matsepe Business Card">
+
+    <!-- === HEADER: Logo + Avatar === -->
+    <header class="card__header">
+
+      <!-- Brand logo -->
+      <div class="brand">
+        <!-- Inline SVG recreation of the Consulting By Bongi swoosh logo -->
+        <img class="brand__icon" src="logo.png" alt="Consulting By Bongi Logo" />
+
+
+      <!-- Profile avatar -->
+      <div class="avatar-wrap" aria-label="Photo of Reneiloe Matsepe">
+        <!--
+          TO UPDATE PHOTO:
+          Replace the src below with your own image URL or base64 string.
+          e.g. src="./photo.jpg" or src="https://example.com/photo.jpg"
+        -->
+        <img
+          src="RM_ProfilePic.png"
+          alt="Reneiloe Matsepe"
+          id="avatar-img"
+          onerror="this.style.display='none'; document.querySelector('.avatar-fallback').style.display='flex';"
+        />
+        <div class="avatar-fallback" aria-hidden="true">RM</div>
+      </div>
+
+    </header>
+
+    <!-- === BODY: Name, Title, Contacts === -->
+    <div class="card__body">
+
+      <!-- Person identity -->
+      <p class="person__name">Reneiloe Matsepe</p>
+      <p class="person__role">Accounts Executive</p>
+      <p class="person__company">Consulting By Bongi (Pty) Ltd</p>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Contact details list -->
+      <ul class="contact-list" aria-label="Contact Information">
+
+        <!-- Phone -->
+        <li>
+          <a class="contact-item" href="tel:+27764519325" aria-label="Call +27 76 451 9325">
+            <span class="contact-item__icon" aria-hidden="true">
+              <!-- Phone icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+              </svg>
+            </span>
+            <div class="contact-item__info">
+              <span class="contact-item__value">+27 76 451 9325</span>
+              <span class="contact-item__label">Mobile</span>
+            </div>
+          </a>
+        </li>
+
+        <!-- Email -->
+        <li>
+          <a class="contact-item" href="mailto:reneiloe@consultingbybongi.co.za" aria-label="Email reneiloe@consultingbybongi.co.za">
+            <span class="contact-item__icon" aria-hidden="true">
+              <!-- Email icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </span>
+            <div class="contact-item__info">
+              <span class="contact-item__value">reneiloe@consultingbybongi.co.za</span>
+              <span class="contact-item__label">Work</span>
+            </div>
+          </a>
+        </li>
+
+        <!-- LinkedIn -->
+        <li>
+          <a class="contact-item" href="https://www.linkedin.com/company/consulting-bybongi/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+            <span class="contact-item__icon" aria-hidden="true">
+              <!-- LinkedIn icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </span>
+            <div class="contact-item__info">
+              <span class="contact-item__value">LinkedIn</span>
+              <span class="contact-item__label">Professional Network</span>
+            </div>
+          </a>
+        </li>
+
+        <!-- Instagram -->
+        <li>
+          <a class="contact-item" href="https://www.instagram.com/consultingbybongi" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile">
+            <span class="contact-item__icon" aria-hidden="true">
+              <!-- Instagram icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+            </span>
+            <div class="contact-item__info">
+              <span class="contact-item__value">Instagram</span>
+              <span class="contact-item__label">Follow Us</span>
+            </div>
+          </a>
+        </li>
+
+        <!-- Facebook -->
+        <li>
+          <a class="contact-item" href="https://www.facebook.com/cbbtraining" target="_blank" rel="noopener noreferrer" aria-label="Facebook page">
+            <span class="contact-item__icon" aria-hidden="true">
+              <!-- Facebook icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </span>
+            <div class="contact-item__info">
+              <span class="contact-item__value">Facebook</span>
+              <span class="contact-item__label">Like Our Page</span>
+            </div>
+          </a>
+        </li>
+
+      </ul><!-- /contact-list -->
+
+      <!-- Save Contact CTA -->
+      <button class="btn-save" id="saveContactBtn" aria-label="Save contact as vCard">
+        Save Contact
+      </button>
+
+    </div><!-- /card__body -->
+
+    <!-- Footer -->
+    <footer class="card__footer">
+      <p>Consulting By Bongi (Pty) Ltd &nbsp;·&nbsp; consultingbybongi.co.za</p>
+    </footer>
+
+  </article><!-- /card -->
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite">✅ Contact saved!</div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       - vCard generation & download
+       - Toast notification
+       TO UPDATE CONTACT DETAILS: edit the CONTACT object below.
+  ====================================================== -->
+  <script>
+    /* =====================================================
+       CONTACT DATA
+       Edit this object to update all contact info.
+       Social media URLs below should also be updated.
+    ===================================================== */
+    const CONTACT = {
+      firstName:   'Reneiloe',
+      lastName:    'Matsepe',
+      fullName:    'Reneiloe Matsepe',
+      title:       'Accounts Executive',
+      company:     'Consulting By Bongi (Pty) Ltd',
+      phone:       '+27764519325',
+      email:       'reneiloe@consultingbybongi.co.za',
+      website:     'https://www.consultingbybongi.co.za',
+      linkedin:    'https://www.linkedin.com/in/reneiloematsepe',
+      instagram:   'https://www.instagram.com/consultingbybongi',
+      facebook:    'https://www.facebook.com/consultingbybongi',
+      note:        'Consulting By Bongi (Pty) Ltd – Accounts Executive'
+    };
+
+    /* =====================================================
+       GENERATE & DOWNLOAD vCARD (.vcf)
+       vCard 3.0 format – compatible with iOS, Android,
+       Outlook, Gmail Contacts.
+    ===================================================== */
+    function generateVCard(contact) {
+      const vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        `FN:${contact.fullName}`,
+        `N:${contact.lastName};${contact.firstName};;;`,
+        `ORG:${contact.company}`,
+        `TITLE:${contact.title}`,
+        `TEL;TYPE=CELL:${contact.phone}`,
+        `EMAIL;TYPE=WORK:${contact.email}`,
+        `URL:${contact.website}`,
+        `X-SOCIALPROFILE;type=linkedin:${contact.linkedin}`,
+        `X-SOCIALPROFILE;type=instagram:${contact.instagram}`,
+        `X-SOCIALPROFILE;type=facebook:${contact.facebook}`,
+        `NOTE:${contact.note}`,
+        'END:VCARD'
+      ].join('\r\n');
+      return vcard;
+    }
+
+    function downloadVCard() {
+      const vcardData = generateVCard(CONTACT);
+      const blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+      const url  = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href     = url;
+      link.download = `${CONTACT.firstName}_${CONTACT.lastName}.vcf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('Contact downloaded!');
+    }
+
+    /* =====================================================
+       TOAST NOTIFICATION
+    ===================================================== */
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = '✅ ' + message;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+
+    /* =====================================================
+       WIRE UP BUTTON
+    ===================================================== */
+    document.getElementById('saveContactBtn').addEventListener('click', downloadVCard);
+
+  </script>
+
+</body>
+</html>
